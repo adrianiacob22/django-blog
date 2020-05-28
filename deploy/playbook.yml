@@ -10,11 +10,11 @@
       api_version: v1
       kind: Namespace
       state: present
-      
+
   - name: Deploy the service
     k8s:
       state: present
-      definition: "{{ lookup('file', 'service.yml') }}"
+      definition: "{{ lookup('template', 'service.yml') }}"
       validate_certs: no
       namespace: default
 
