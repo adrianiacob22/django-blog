@@ -17,7 +17,7 @@ pipeline {
            }
        }
        stage('Build docker image based on updated code') {
-           steps {'nexus'
+           steps {
               echo 'Starting to build docker image'
               script {
                 env.appImage = env.registry + "/django-blog:${env.BUILD_ID}"
