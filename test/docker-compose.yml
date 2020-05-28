@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  mariadb:
+    image: mariadb
+    ports:
+      - "3306:3306"
+    volumes:
+      - /data/db/djangoproject:/var/lib/mysql
+    networks:
+      - django
+    environment:
+      - MYSQL_ROOT_PASSWORD=djangoproject
+
+  djangoproject:
+    image: ${appImage}
+    networks:
+      - django
+    depends_on:
+      - mariadb
+
+  curl:
+    build: .
+    volumes:
+      - ./test.sh:/test.sh
+    command: sh test.sh
+    networks:
+      - django
+    links:
+      - djangoproject
+networks:
+  django:

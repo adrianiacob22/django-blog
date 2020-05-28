@@ -1,0 +1,53 @@
+- hosts: localhost
+  vars:
+    KUBECONFIG: "{{ KUBECONFIG }}"
+    ns: myblog
+
+  tasks:
+  - name: Create a k8s namespace
+    k8s:
+      name: "{{ ns }}"
+      api_version: v1
+      kind: Namespace
+      state: present
+      
+  - name: Deploy the service
+    k8s:
+      state: present
+      definition: "{{ lookup('file', 'service.yml') }}"
+      validate_certs: no
+      namespace: default
+
+  - debug:
+      msg: "{{ appImage }}"
+
+  - name: Deploy the application
+    k8s:
+      state: present
+      validate_certs: no
+      namespace: "{{ ns }}"
+      definition:
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: django-blog
+          labels:
+            role: blog
+        spec:
+          replicas: 4
+          selector:
+            matchLabels:
+              role: blog
+          template:
+            metadata:
+              labels:
+                role: blog
+            spec:
+              containers:
+              - name: blog
+                image: "{{ appImage }}"
+                resources:
+                  requests:
+                    cpu: 10m
+              imagePullSecrets:
+              - name: docker-repo

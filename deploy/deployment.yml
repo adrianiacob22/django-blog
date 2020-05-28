@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-blog
+  namespace: "{{ ns }}"
+  labels:
+    role: blog
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      role: blog
+  template:
+    metadata:
+      labels:
+        role: blog
+    spec:
+      containers:
+      - name: blog
+        image: "{{ appImage }}"
+        resources:
+          requests:
+            cpu: 10m
+      imagePullSecrets:
+      - name: docker-repo
