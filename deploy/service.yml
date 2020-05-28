@@ -8,7 +8,7 @@ spec:
     role: blog
   ports:
     - protocol: TCP
-      port: 80
+      port: 8000
       targetPort: 8000
-      nodePort: 32000
+      nodePort: 32080
   type: NodePort
