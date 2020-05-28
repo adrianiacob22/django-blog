@@ -4,6 +4,7 @@ pipeline {
         label 'docker'
       }
    }
+
    environment {
        registry = "nexus.local.net:8123"
        registryurl = "http://nexus.local.net:8123"
@@ -31,6 +32,7 @@ pipeline {
                   sh '''
                   cd test
                   set -a
+                  docker-compose config
                   docker-compose -p blog up --abort-on-container-exit --exit-code-from curl
                   docker-compose -p blog rm -f
                   '''
