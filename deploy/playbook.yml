@@ -11,12 +11,33 @@
       kind: Namespace
       state: present
 
-  - name: Deploy the service
+  - name: Create persistent volume claim for mariadb
+    k8s:
+      state: present
+      definition: "{{ lookup('template', 'mariadb-pvc.yml') }}"
+      validate_certs: no
+      namespace: "{{ ns }}"
+
+  - name: Create mariadb service
+    k8s:
+      state: present
+      definition: "{{ lookup('template', 'mariadb-svc.yml') }}"
+      validate_certs: no
+      namespace: "{{ ns }}"
+
+  - name: Deploy mariadb
+    k8s:
+      state: present
+      definition: "{{ lookup('template', 'mariadb-deploy.yml') }}"
+      validate_certs: no
+      namespace: "{{ ns }}"
+
+  - name: Deploy the application service
     k8s:
       state: present
       definition: "{{ lookup('template', 'service.yml') }}"
       validate_certs: no
-      namespace: default
+      namespace: "{{ ns }}"
 
   - debug:
       msg: "{{ appImage }}"
