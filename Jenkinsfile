@@ -1,12 +1,13 @@
 pipeline {
    agent  {
       node {
-            label 'docker'
+        label 'docker'
       }
    }
    environment {
        registry = "nexus.local.net:8123"
        registryurl = "http://nexus.local.net:8123"
+       def BUILDTIME = sh(script: "echo `date +%Y%m%d-%H%M`", returnStdout: true).trim()
    }
    stages {
        stage('Cleanup workspace and checkout scm') {
@@ -19,8 +20,8 @@ pipeline {
            steps {
               echo 'Starting to build docker image'
               script {
-                env.appImage = env.registry + "/django-blog:${env.BUILD_ID}"
-                buildImage = docker.build("${env.registry}" + "/django-blog:${env.BUILD_ID}")
+                env.appImage = env.registry + "/django-blog:${env.BUILDTIME}"
+                buildImage = docker.build("${env.registry}" + "/django-blog:${env.BUILDTIME}")
               }
            }
        }
