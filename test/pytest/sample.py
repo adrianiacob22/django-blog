@@ -58,9 +58,7 @@ body = browser.find_element_by_id('id_body')
 
 titlu.send_keys('titlu de test')
 body.send_keys('adaug o postare noua pentru test')
-
 # salvez postarea
-
 element = browser.find_element_by_name('_continue').click()
 ActionChains(browser).click(element).perform()
 # sterg postarea
