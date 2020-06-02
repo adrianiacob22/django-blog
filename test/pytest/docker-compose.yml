@@ -1,0 +1,37 @@
+# Momentan acest fisier nu va fi folosit
+version: '3.7'
+
+services:
+  selenium-hub:
+    image: selenium/hub
+    ports:
+      - "4444:4444"
+    volumes:
+      - /etc/hosts:/etc/hosts
+    networks:
+      - selenium
+
+  selenium-grid:
+    image: selenium/node-firefox-debug
+    networks:
+      - selenium
+    links: 
+      - selenium-hub:hub
+    ports:
+      - "5900:5900"
+    volumes:
+      - /dev/shm:/dev/shm
+      - /etc/hosts:/etc/hosts
+
+  selenium-tests:
+    build: .
+    networks:
+      - selenium
+    links:
+      - selenium-grid
+    volumes:
+      - /etc/hosts:/etc/hosts
+    command: sleep 5000
+
+networks:
+  selenium:

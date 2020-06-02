@@ -4,21 +4,21 @@
     ns: myblog
 
   tasks:
-  - name: Create a k8s namespace
+  - name: Creez un namespace in kubernetes
     k8s:
       name: "{{ ns }}"
       api_version: v1
       kind: Namespace
       state: present
 
-  - name: Create persistent volume claim for mariadb
+  - name: Creez o cerere de volum persistent
     k8s:
       state: present
       definition: "{{ lookup('template', 'mariadb-pvc.yml') }}"
       validate_certs: no
       namespace: "{{ ns }}"
 
-  - name: Create mariadb service
+  - name: Creez un serviciu pentru mariadb
     k8s:
       state: present
       definition: "{{ lookup('template', 'mariadb-svc.yml') }}"
@@ -32,7 +32,7 @@
       validate_certs: no
       namespace: "{{ ns }}"
 
-  - name: Deploy the application service
+  - name: Creez un serviciu pentru a expune aplicatia
     k8s:
       state: present
       definition: "{{ lookup('template', 'service.yml') }}"
@@ -42,7 +42,7 @@
   - debug:
       msg: "{{ appImage }}"
 
-  - name: Deploy the application
+  - name: Deploymentul aplicatiei
     k8s:
       state: present
       validate_certs: no
