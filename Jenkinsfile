@@ -73,5 +73,21 @@ pipeline {
                }
            }
        }
+
+        post { 
+            always { 
+                echo 'I will always say Hello again!'
+            }
+            success {  
+                echo 'Deployment-ul s-a efectuat cu succes'
+                echo 'Pornesc testarea functionala'
+                build job: 'Testare_automata'
+            }
+            changed {
+            sh 'echo "This will run only if the state of the Pipeline has changed"'
+            sh 'echo "For example, the Pipeline was previously failing but is now successful"'
+            sh 'echo "... or the other way around :)"'
+            } 
+        }
    }
 }
