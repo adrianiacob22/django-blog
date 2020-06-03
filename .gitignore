@@ -16,7 +16,7 @@ MANIFEST
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
-
+.geckodriver.log
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
@@ -46,6 +46,10 @@ target/
 
 # pyenv
 .python-version
+
+#pytest
+.pytest_cache
+reports/
 
 # celery beat schedule file
 celerybeat-schedule
