@@ -53,7 +53,7 @@ def testInvalidLogin(testSetup):
     enterPassword(parola1)
     # Introduc utilizator si parola, apoi dau click pe login
     browser.find_element_by_xpath('/html/body/div/div[2]/div/form/div[3]/input').click
-    browser.implicitly_wait(10)
+    # browser.implicitly_wait(10)
     try: 
         assert "next=" not in browser.current_url
     finally:
@@ -111,16 +111,6 @@ def enterPassword(password):
 #     # inchid ferastra browserului
 #     browser.close()
 
-# testSetup()
 
-# testLogin()
-
-# browser.implicitly_wait(3)
-# setup()
-# testPost()
-
-# browser.implicitly_wait(3)
-
-# testLogout()
 
 
