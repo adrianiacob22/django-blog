@@ -75,18 +75,26 @@ pipeline {
        }
     }
     post { 
-        always { 
-            echo 'I will always say Hello again!'
-        }
         success {  
             echo 'Deployment-ul s-a efectuat cu succes'
             echo 'Pornesc testarea functionala'
+            emailext (
+            subject: "Deployment-ul aplicatiei pe mediul Kubernetes are status: ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
+            body: 'Deployment-ul aplicatiei my-blog pe mediul Kubernetes: ${currentBuild.currentResult}: Job ${env.JOB_NAME}',
+            to: adrianiacob22@gmail.com)
             build job: 'Testare_automata'
         }
+        failure {
+            emailext (
+            subject: "Deployment-ul aplicatiei pe mediul Kubernetes are status: ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
+            body: 'Deployment-ul aplicatiei my-blog pe mediul Kubernetes: ${currentBuild.currentResult}: Job ${env.JOB_NAME}',
+            to: adrianiacob22@gmail.com)
+        }
         changed {
-            sh 'echo "This will run only if the state of the Pipeline has changed"'
-            sh 'echo "For example, the Pipeline was previously failing but is now successful"'
-            sh 'echo "... or the other way around :)"'
+            emailext (
+            subject: "Deployment-ul aplicatiei pe mediul Kubernetes are status: ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
+            body: 'Deployment-ul aplicatiei my-blog pe mediul Kubernetes: ${currentBuild.currentResult}: Job ${env.JOB_NAME}',
+            to: adrianiacob22@gmail.com)
         } 
     }
 }
