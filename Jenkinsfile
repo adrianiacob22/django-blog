@@ -52,6 +52,10 @@ pipeline {
         stage('Aprove deployment step') {
             steps {
                 script {
+                    emailext (
+                        subject: "Deployment-ul aplicatiei necesita aprobare: ${env.JOB_NAME}",
+                        body: 'Aproba job-ul: ${env.JOB_NAME} aici: $BUILD_URL',
+                        to: 'adrianiacob22@gmail.com')
                     def deploymentDelay = input id: 'Deploy', message: 'Deploy to production?', submitter: 'adrian', 
                     parameters: [choice(choices: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24'], 
                     description: 'Hours to delay deployment?', name: 'deploymentDelay')]
