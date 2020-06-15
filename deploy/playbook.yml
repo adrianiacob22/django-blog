@@ -71,8 +71,8 @@
                   requests:
                     cpu: 10m
               initContainers:
-                - name: mysql-client
-                  image: mysql:5.6
-                  command: ['sh', '-c', 'mysql -h mysql -pdjangoproject]
+              - name: mysql-client
+                image: mysql:5.6
+                command: ['sh', '-c', 'mysql -h mysql -pdjangoproject']
               imagePullSecrets:
-                - name: docker-repo
+              - name: docker-repo
