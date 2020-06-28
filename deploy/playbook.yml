@@ -55,7 +55,7 @@
           labels:
             role: blog
         spec:
-          replicas: 2
+          replicas: 10
           selector:
             matchLabels:
               role: blog

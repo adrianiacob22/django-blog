@@ -14,11 +14,13 @@ parola = "us3rpass"
 user1 = "invalid"
 parola1 = "invalid"
 app_url = 'http://myapp.local.net:32080/'
-browser = webdriver.Firefox()
+# browser = webdriver.Firefox()
 # wait = WebDriverWait(driver, 10)
 
 @pytest.fixture()
 def testSetup():
+    global browser
+    browser = webdriver.Firefox()
     browser.implicitly_wait(1)
     yield
     browser.quit()
@@ -35,9 +37,10 @@ def testLogin(testSetup):
     # Introduc username si password apoi apas Log in
     enterUsername(user)
     enterPassword(parola)
-    time.sleep(2)
+    time.sleep(1)
     browser.find_element_by_xpath('/html/body/div/div[2]/div/form/div[3]/input').click
-    browser.implicitly_wait(3)
+    time.sleep(2)
+    browser.implicitly_wait(2)
     assert "admin" in browser.current_url
 
 @allure.description("Validez ca login nu functioneaza cu credentiale invalide")
@@ -54,10 +57,10 @@ def testInvalidLogin(testSetup):
     enterPassword(parola1)
     # Introduc utilizator si parola, apoi dau click pe login
     browser.find_element_by_xpath('/html/body/div/div[2]/div/form/div[3]/input').click
-    time.sleep(1)
-    # browser.implicitly_wait(10)
+    time.sleep(2)
+    browser.implicitly_wait(2)
     try:
-        assert "next=" not in browser.current_url
+        assert "next=" in browser.current_url
     finally:
         if(AssertionError):
             allure.attach(browser.get_screenshot_as_png(), name="Invalid_Credentials", attachment_type=allure.attachment_type.PNG)
