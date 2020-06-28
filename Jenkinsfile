@@ -56,8 +56,8 @@ pipeline {
                         subject: "Deployment-ul aplicatiei necesita aprobare: ${env.JOB_NAME}",
                         body: 'Aproba build-ul: ${BUILD_DISPLAY_NAME} aici: ${BUILD_URL}input',
                         to: 'adrianiacob22@gmail.com')
-                    def deploymentDelay = input id: 'Deploy', message: 'Deploy to production?', submitter: 'adrian', 
-                    parameters: [choice(choices: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24'], 
+                    def deploymentDelay = input id: 'Deploy', message: 'Deploy to production?', submitter: 'adrian',
+                    parameters: [choice(choices: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24'],
                     description: 'Hours to delay deployment?', name: 'deploymentDelay')]
                     sleep time: deploymentDelay.toInteger(), unit: 'HOURS'
                 }
@@ -78,15 +78,15 @@ pipeline {
            }
        }
     }
-    post { 
-        success {  
+    post {
+        success {
             echo 'Deployment-ul s-a efectuat cu succes'
             echo 'Pornesc testarea functionala'
             emailext (
             subject: "Deployment-ul aplicatiei pe mediul Kubernetes are status: ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
             body: 'Deployment-ul aplicatiei my-blog pe mediul Kubernetes: ${currentBuild.currentResult}: Job ${env.JOB_NAME}',
             to: 'adrianiacob22@gmail.com')
-            build job: 'Testare_automata'
+            build job: 'Proiect\ Licenta/Testare_automata'
         }
         failure {
             emailext (
@@ -99,6 +99,6 @@ pipeline {
             subject: "Deployment-ul aplicatiei pe mediul Kubernetes are status: ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
             body: 'Deployment-ul aplicatiei my-blog pe mediul Kubernetes: ${currentBuild.currentResult}: Job ${env.JOB_NAME}',
             to: 'adrianiacob22@gmail.com')
-        } 
+        }
     }
 }
