@@ -54,10 +54,10 @@ def testInvalidLogin(testSetup):
     enterPassword(parola1)
     # Introduc utilizator si parola, apoi dau click pe login
     browser.find_element_by_xpath('/html/body/div/div[2]/div/form/div[3]/input').click
-    time.sleep(2)
+    time.sleep(1)
     # browser.implicitly_wait(10)
     try:
-        assert "next=" in browser.current_url
+        assert "next=" not in browser.current_url
     finally:
         if(AssertionError):
             allure.attach(browser.get_screenshot_as_png(), name="Invalid_Credentials", attachment_type=allure.attachment_type.PNG)
