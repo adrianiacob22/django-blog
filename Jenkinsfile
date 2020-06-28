@@ -86,7 +86,7 @@ pipeline {
             subject: "Deployment-ul aplicatiei pe mediul Kubernetes are status: ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
             body: 'Deployment-ul aplicatiei my-blog pe mediul Kubernetes: ${currentBuild.currentResult}: Job ${env.JOB_NAME}',
             to: 'adrianiacob22@gmail.com')
-            build job: 'Proiect\ Licenta/Testare_automata'
+            build job: 'Proiect Licenta/Testare_automata'
         }
         failure {
             emailext (
