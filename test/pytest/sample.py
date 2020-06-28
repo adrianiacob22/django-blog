@@ -13,12 +13,11 @@ parola = "us3rpass"
 user1 = "invalid"
 parola1 = "invalid"
 app_url = 'http://myapp.local.net:32080/'
+browser = webdriver.Firefox()
 # wait = WebDriverWait(driver, 10)
 
 @pytest.fixture()
 def testSetup():
-    global browser
-    browser = webdriver.Firefox()
     browser.implicitly_wait(1)
     yield
     browser.quit()
@@ -35,6 +34,7 @@ def testLogin(testSetup):
     # Introduc username si password apoi apas Log in
     enterUsername(user)
     enterPassword(parola)
+    time.sleep(2)
     browser.find_element_by_xpath('/html/body/div/div[2]/div/form/div[3]/input').click
     browser.implicitly_wait(3)
     assert "admin" in browser.current_url
@@ -53,6 +53,7 @@ def testInvalidLogin(testSetup):
     enterPassword(parola1)
     # Introduc utilizator si parola, apoi dau click pe login
     browser.find_element_by_xpath('/html/body/div/div[2]/div/form/div[3]/input').click
+    time.sleep(2)
     # browser.implicitly_wait(10)
     try:
         assert "next=" in browser.current_url
