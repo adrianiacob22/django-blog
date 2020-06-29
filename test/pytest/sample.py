@@ -60,7 +60,7 @@ def testInvalidLogin(testSetup):
     time.sleep(2)
     browser.implicitly_wait(2)
     try:
-        assert "next=" not in browser.current_url
+        assert "next=" in browser.current_url
     finally:
         if(AssertionError):
             allure.attach(browser.get_screenshot_as_png(), name="Invalid_Credentials", attachment_type=allure.attachment_type.PNG)
