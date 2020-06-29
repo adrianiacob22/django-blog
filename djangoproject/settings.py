@@ -30,9 +30,10 @@ ALLOWED_HOSTS = [
             'localhost',
             '127.0.0.1',
             'djangoproject',
-            'myapp.local.net',
-            'apliactiamea.local.net'
+            'myapp.local.net'
+            # 'aplicatiamea.local.net'
 ]
+
 
 
 # Application definition
